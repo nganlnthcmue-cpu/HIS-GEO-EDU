@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>HIS - GEO EDU | Quản lý lớp học</title>
+<style>
+:root{--green:#176b45;--green2:#218653;--mint:#eaf7ef;--bg:#f4f7f5;--text:#1f2937;--muted:#6b7280;--line:#e5ebe7;--red:#dc2626;--yellow:#f59e0b}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:9px;padding:10px 13px;background:var(--green);color:white;font-weight:600}button:hover{filter:brightness(.95)}button.secondary{background:#edf2ef;color:#34443b}button.danger{background:#fee2e2;color:#991b1b}button.small{padding:6px 9px;font-size:12px}
+.app{display:flex;min-height:100vh}.sidebar{width:245px;background:#124e35;color:#fff;padding:22px 14px;flex-shrink:0}.brand{display:flex;gap:10px;align-items:center;padding:0 8px 24px;border-bottom:1px solid #ffffff25}.logo{width:42px;height:42px;border-radius:12px;background:#ffffff20;display:grid;place-items:center;font-size:23px}.brand h1{font-size:16px;margin:0 0 4px}.brand small{color:#c4e5d2}.nav-label{font-size:11px;letter-spacing:1px;color:#a8d0b8;margin:23px 10px 8px}.nav button{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:transparent;color:#dceee3;padding:12px 13px;margin:3px 0;font-weight:500}.nav button.active,.nav button:hover{background:#ffffff20;color:#fff}.nav .ico{width:20px;text-align:center}.side-note{font-size:12px;color:#b9d9c5;line-height:1.6;padding:20px 10px}
+main{flex:1;min-width:0}.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:15px}.topbar h2{font-size:19px;margin:0}.top-right{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px}.avatar{width:34px;height:34px;background:var(--mint);color:var(--green);border-radius:50%;display:grid;place-items:center;font-weight:bold}
+.content{padding:25px 28px;max-width:1500px;margin:auto}.page-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap}.page-head h2{margin:0;font-size:24px}.sub{font-size:13px;color:var(--muted);margin-top:6px}.filters{display:flex;gap:9px;flex-wrap:wrap}.filters input,.filters select,.field input,.field select,.field textarea{border:1px solid #d9e2dc;border-radius:8px;padding:10px;background:#fff;color:var(--text);min-width:120px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:20px}.card,.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 2px 8px #183b2710}.stat-label{font-size:13px;color:var(--muted)}.stat-value{font-size:29px;font-weight:750;margin:12px 0 7px}.stat-foot{font-size:12px;color:var(--green)}.stat-icon{float:right;background:var(--mint);width:39px;height:39px;border-radius:11px;display:grid;place-items:center;font-size:19px}
+.two-col{display:grid;grid-template-columns:1.25fr 1fr;gap:18px}.panel{margin-bottom:18px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.panel h3{font-size:16px;margin:0}.muted{color:var(--muted);font-size:12px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px;min-width:600px}th{background:#f5f8f6;color:#526157;font-weight:700;text-align:left}th,td{padding:12px 11px;border-bottom:1px solid var(--line);vertical-align:middle}tbody tr:hover{background:#fbfdfb}.pill{display:inline-block;border-radius:99px;padding:5px 9px;font-size:11px;font-weight:700;background:var(--mint);color:var(--green)}.pill.red{background:#fee2e2;color:#991b1b}.pill.yellow{background:#fef3c7;color:#92400e}.bar-row{display:grid;grid-template-columns:60px 1fr 42px;gap:10px;align-items:center;margin:17px 0;font-size:13px}.bar{height:10px;background:#edf2ef;border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:var(--green2);border-radius:99px}.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.quick{background:#f7faf8;border:1px solid var(--line);padding:15px;border-radius:11px;color:var(--text);text-align:left}.quick b{display:block;margin-bottom:6px}.quick span{font-size:12px;color:var(--muted);font-weight:400}
+.notice{padding:12px 14px;background:#f0f9f3;border:1px solid #cce9d6;color:#245c3b;border-radius:10px;font-size:13px;margin-bottom:17px}.empty{text-align:center;color:var(--muted);padding:30px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600}.field input,.field select,.field textarea{width:100%;font-weight:400}.field.full{grid-column:1/-1}.modal-backdrop{display:none;position:fixed;inset:0;background:#0b2118a8;z-index:5;align-items:center;justify-content:center;padding:16px}.modal-backdrop.show{display:flex}.modal{background:#fff;border-radius:15px;padding:22px;width:min(600px,100%);max-height:90vh;overflow:auto}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h3{margin:0}.close{background:#eef3ef;color:#33443a;font-size:18px;padding:5px 10px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.toast{position:fixed;right:22px;bottom:22px;background:#163e2b;color:#fff;padding:13px 18px;border-radius:10px;box-shadow:0 8px 30px #0002;display:none;z-index:10}.mobile-menu{display:none}
+@media(max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}.sidebar{width:210px}.content{padding:20px}}
+@media(max-width:680px){.app{display:block}.sidebar{width:100%;padding:12px}.brand{padding-bottom:12px}.nav{display:flex;overflow:auto;gap:5px}.nav-label,.side-note{display:none}.nav button{white-space:nowrap;width:auto;margin:5px 0;padding:9px}.topbar{height:58px;padding:0 15px}.content{padding:16px}.cards{gap:10px}.card{padding:13px}.stat-value{font-size:24px}.page-head h2{font-size:21px}.top-right .date-label{display:none}.quick-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+
+.auth-screen{position:fixed;inset:0;background:linear-gradient(135deg,#124e35,#218653);z-index:20;display:flex;align-items:center;justify-content:center;padding:18px}
+.auth-card{background:#fff;border-radius:18px;width:min(440px,100%);padding:30px;box-shadow:0 24px 80px #082d1d55}
+.auth-card h2{margin:0 0 6px;color:#164e35}.auth-card p{color:#64748b;font-size:13px;line-height:1.55}
+.auth-card .field{margin:14px 0}.auth-card .field input,.auth-card .field select{width:100%}
+.auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.auth-brand .logo{background:#e8f5ec;color:#176b45}
+.auth-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.auth-actions button{flex:1}
+.cloud-badge{display:inline-block;padding:5px 9px;background:#eaf7ef;border-radius:99px;color:#176b45;font-size:11px;font-weight:bold}
+.role-note{padding:10px 12px;border-radius:9px;background:#f4f7f5;font-size:12px;color:#526157;line-height:1.5}
+.user-menu{display:flex;align-items:center;gap:8px}
+@media(max-width:680px){.auth-card{padding:22px}.top-right{gap:5px}.top-right #classSelector{max-width:120px!important}.top-right #userLabel{display:none}.topbar h2{font-size:15px}}
+
+
+/* ÉP TOÀN BỘ GIAO DIỆN DÙNG ARIAL; TẮT HIỆU ỨNG CHỮ CÓ THỂ GÂY NHÒE */
+html, body, body *, body *::before, body *::after {
+  font-family: Arial, sans-serif !important;
+  font-variant-ligatures: none !important;
+  font-kerning: none !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 transparent !important;
+}
+html { -webkit-font-smoothing: antialiased; }
+button, input, select, textarea, option {
+  font-family: Arial, sans-serif !important;
+  font-variant: normal !important;
+  letter-spacing: normal !important;
+}
+</style>
+</head>
+<body>
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-brand"><div class="logo">HG</div><div><b>HIS - GEO EDU</b><div class="muted">Trường TH &amp; THCS Ngô Chí Quốc</div></div></div>
+    <h2 id="authTitle">Đăng nhập HIS - GEO EDU</h2>
+    <p>GV Lê Nguyễn Thảo Ngân · Trường TH &amp; THCS Ngô Chí Quốc.</p>
+    <div class="field"><label>Email</label><input id="authEmail" type="email" autocomplete="username" placeholder="ten@example.com"></div>
+    <div class="field"><label>Mật khẩu</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu"></div>
+    <div class="field" id="roleField" style="display:none"><label>Vai trò khi đăng ký</label><select id="authRole"><option value="student">Học sinh</option><option value="teacher">Giáo viên</option></select></div>
+    <div class="role-note" id="authHelp">Đăng nhập bằng tài khoản được quản trị viên cấp. Bản mẫu hiện chạy chế độ cục bộ cho đến khi bạn cấu hình Firebase.</div>
+    <div class="auth-actions"><button id="loginBtn" onclick="authLogin()">Đăng nhập</button><button class="secondary" id="registerBtn" onclick="toggleRegister()">Tạo tài khoản</button></div>
+    <button class="secondary" style="width:100%;margin-top:9px" onclick="continueLocal()">Dùng thử ngoại tuyến</button>
+    <p style="font-size:11px;margin-top:18px">Không nhập mật khẩu thật nếu chưa cấu hình Firebase. Tài khoản và dữ liệu demo chỉ dùng để thử giao diện.</p>
+  </div>
+</div>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">HG</div><div><h1>HIS - GEO EDU</h1><small>Hệ thống quản lý giáo dục</small></div></div>
+  <div class="nav-label">MENU CHÍNH</div>
+  <nav class="nav" id="nav">
+    <button class="active" data-page="dashboard"><span class="ico">▦</span>Tổng quan</button>
+    <button data-page="points"><span class="ico">✎</span>Nhập điểm tuần</button>
+    <button data-page="students"><span class="ico">♙</span>Danh sách học sinh</button>
+    <button data-page="violations"><span class="ico">⚑</span>Vi phạm &amp; khen thưởng</button>
+    <button data-page="ranking"><span class="ico">★</span>Bảng xếp hạng</button>
+    <button data-page="reports"><span class="ico">▤</span>Báo cáo</button>
+  </nav>
+  <div class="side-note"><b>HIS - GEO EDU</b><br>GV Lê Nguyễn Thảo Ngân<br>Trường TH &amp; THCS Ngô Chí Quốc<br><br><span id="syncStatus">Chế độ bản địa: dữ liệu lưu trên máy này.</span></div>
+</aside>
+<main>
+  <header class="topbar"><h2 id="topTitle">Tổng quan lớp học</h2><div class="top-right"><select id="classSelector" aria-label="Chọn lớp" onchange="switchClass(this.value)" style="max-width:190px;border:1px solid #d9e2dc;border-radius:8px;padding:8px;background:#fff"></select><button class="secondary small" onclick="openClassModal()">＋ Lớp</button><span class="date-label" id="today"></span><div class="avatar">TN</div><span id="userLabel">GV Lê Nguyễn Thảo Ngân</span></div></header>
+  <div class="content" id="content"></div>
+</main>
+</div>
+<div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h3 id="modalTitle">Thêm mới</h3><button class="close" onclick="closeModal()">×</button></div><div id="modalBody"></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const $=s=>document.querySelector(s);
+const titles={dashboard:'Tổng quan lớp học',points:'Nhập điểm thi đua theo tuần',students:'Danh sách học sinh',violations:'Theo dõi vi phạm & khen thưởng',ranking:'Bảng xếp hạng thi đua',reports:'Báo cáo và xuất dữ liệu'};
+let page='dashboard';
+const defaultStudents=[
+{id:1,name:'Nguyễn Minh Anh',code:'HS001',team:'Tổ 1',note:''},{id:2,name:'Trần Gia Bảo',code:'HS002',team:'Tổ 1',note:''},
+{id:3,name:'Lê Hoàng Châu',code:'HS003',team:'Tổ 2',note:''},{id:4,name:'Phạm Quốc Đạt',code:'HS004',team:'Tổ 2',note:''},
+{id:5,name:'Võ Ngọc Hà',code:'HS005',team:'Tổ 3',note:''},{id:6,name:'Đặng Tuấn Kiệt',code:'HS006',team:'Tổ 3',note:''},
+{id:7,name:'Bùi Khánh Linh',code:'HS007',team:'Tổ 4',note:''},{id:8,name:'Đỗ Đức Minh',code:'HS008',team:'Tổ 4',note:''}
+];
+function load(key,fallback){try{return JSON.parse(localStorage.getItem('classbook_'+key))??fallback}catch{return fallback}}
+let students=load('students',defaultStudents), entries=load('entries',[]), incidents=load('incidents',[]);
+let classes=load('classes',[{id:'class_1',name:'Lớp chủ nhiệm',schoolYear:'2026–2027'}]);
+let currentClassId=load('currentClassId','class_1');
+let classData=load('classData',{});
+if(!classData[currentClassId]) classData[currentClassId]={students,entries,incidents};
+if(!classes.some(c=>c.id===currentClassId)) currentClassId=classes[0]?.id || 'class_1';
+function persistCurrentClass(){classData[currentClassId]={students,entries,incidents};}
+function save(){
+  persistCurrentClass();
+  localStorage.setItem('classbook_classes',JSON.stringify(classes));
+  localStorage.setItem('classbook_currentClassId',JSON.stringify(currentClassId));
+  localStorage.setItem('classbook_classData',JSON.stringify(classData));
+  // Giữ các khóa cũ để tương thích với bản trước.
+  localStorage.setItem('classbook_students',JSON.stringify(students));
+  localStorage.setItem('classbook_entries',JSON.stringify(entries));
+  localStorage.setItem('classbook_incidents',JSON.stringify(incidents));
+}
+function renderClassSelector(){
+  const sel=$('#classSelector'); if(!sel)return;
+  sel.innerHTML=classes.map(c=>`<option value="${esc(c.id)}" ${c.id===currentClassId?'selected':''}>${esc(c.name)}</option>`).join('');
+}
+function switchClass(id){
+  if(!classes.some(c=>c.id===id))return;
+  persistCurrentClass();currentClassId=id;
+  const d=classData[id]||{students:[],entries:[],incidents:[]};
+  students=d.students||[];entries=d.entries||[];incidents=d.incidents||[];
+  nextStudent=Math.max(0,...students.map(s=>s.id))+1;
+  nextEntry=Math.max(0,...entries.map(e=>e.id))+1;
+  nextIncident=Math.max(0,...incidents.map(e=>e.id))+1;
+  save();renderClassSelector();render();toast('Đã chuyển sang '+classes.find(c=>c.id===id).name);
+}
+function openClassModal(){
+  showModal('Quản lý lớp học',`<div class="notice">Mỗi lớp có danh sách học sinh, điểm thi đua và ghi nhận riêng biệt.</div>
+  <form id="classForm" class="form-grid"><label class="field full">Tên lớp<input name="name" required placeholder="Ví dụ: 8A1, 9A2, 6A3"></label><label class="field full">Năm học<input name="schoolYear" value="2026–2027" required></label><div class="field full"><button type="submit">＋ Tạo lớp mới</button></div></form>
+  <div style="margin-top:20px"><b>Các lớp hiện có</b><div class="table-wrap"><table><thead><tr><th>Tên lớp</th><th>Năm học</th><th>Số học sinh</th><th></th></tr></thead><tbody>${classes.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.schoolYear||'')}</td><td>${(classData[c.id]?.students||[]).length}</td><td>${classes.length>1?`<button class="danger small" onclick="deleteClass('${esc(c.id)}')">Xóa lớp</button>`:'Lớp mặc định'}</td></tr>`).join('')}</tbody></table></div></div>`);
+  $('#classForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));let id='class_'+Date.now();classes.push({id,name:d.name.trim(),schoolYear:d.schoolYear.trim()});classData[id]={students:[],entries:[],incidents:[]};save();closeModal();switchClass(id);openClassModal();};
+}
+function deleteClass(id){
+  if(classes.length<=1){toast('Phải giữ lại ít nhất một lớp');return}
+  const c=classes.find(x=>x.id===id);if(!c||!confirm('Xóa lớp '+c.name+' và dữ liệu riêng của lớp này?'))return;
+  classes=classes.filter(x=>x.id!==id);delete classData[id];
+  if(currentClassId===id){currentClassId=classes[0].id;const d=classData[currentClassId]||{students:[],entries:[],incidents:[]};students=d.students||[];entries=d.entries||[];incidents=d.incidents||[]}
+  save();renderClassSelector();render();openClassModal();toast('Đã xóa lớp');
+}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function today(){return new Date().toISOString().slice(0,10)}
+$('#today').textContent=new Date().toLocaleDateString('vi-VN',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
+function toast(msg){let t=$('#toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500)}
+function go(p){page=p;document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));$('#topTitle').textContent=titles[p];render()}
+$('#nav').addEventListener('click',e=>{let b=e.target.closest('button[data-page]');if(b)go(b.dataset.page)});
+function pointsFor(id){return entries.filter(e=>e.studentId===id).reduce((s,e)=>s+Number(e.points),0)}
+function studentName(id){return students.find(s=>s.id===id)?.name||'Học sinh đã xóa'}
+function sortedStudents(){return students.map(s=>({...s,score:pointsFor(s.id)})).sort((a,b)=>b.score-a.score)}
+function stat(label,val,icon,foot){return `<div class="card"><div class="stat-icon">${icon}</div><div class="stat-label">${label}</div><div class="stat-value">${val}</div><div class="stat-foot">${foot}</div></div>`}
+function render(){renderClassSelector();const c=$('#content');if(page==='dashboard')c.innerHTML=dashboard();if(page==='students')c.innerHTML=studentPage();if(page==='points')c.innerHTML=pointsPage();if(page==='violations')c.innerHTML=incidentPage();if(page==='ranking')c.innerHTML=rankingPage();if(page==='reports')c.innerHTML=reportPage()}
+function dashboard(){let ranked=sortedStudents(),total=entries.reduce((s,e)=>s+Number(e.points),0),negative=incidents.filter(i=>i.type==='Vi phạm').length;
+return `<div class="page-head"><div><h2>Xin chào, Giáo viên! 👋</h2><div class="sub">Lớp đang chọn: <b>${esc(classes.find(x=>x.id===currentClassId)?.name||"")}</b> · Theo dõi thi đua và rèn luyện học sinh.</div></div><div class="filters"><button onclick="openStudent()">＋ Thêm học sinh</button><button class="secondary" onclick="go('points')">Nhập điểm</button></div></div>
+<div class="cards">${stat('Tổng số học sinh',students.length,'♙','Danh sách hiện tại')}${stat('Lượt ghi điểm',entries.length,'✎','Các lần cộng / trừ điểm')}${stat('Tổng điểm đã ghi',total,'★','Tổng điểm thi đua')}${stat('Lượt vi phạm',negative,'⚑','Đã ghi nhận')}</div>
+<div class="two-col"><section class="panel"><div class="panel-head"><h3>🏆 Xếp hạng học sinh</h3><button class="secondary small" onclick="go('ranking')">Xem tất cả →</button></div>${ranked.length?`<div class="table-wrap"><table><thead><tr><th>Hạng</th><th>Học sinh</th><th>Tổ</th><th>Điểm</th></tr></thead><tbody>${ranked.slice(0,5).map((s,i)=>`<tr><td>${['🥇','🥈','🥉'][i]||i+1}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.team)}</td><td><span class="pill ${s.score<0?'red':''}">${s.score>0?'+':''}${s.score}</span></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Chưa có học sinh.</div>'}</section>
+<section class="panel"><div class="panel-head"><h3>⚡ Thao tác nhanh</h3></div><div class="quick-grid"><button class="quick" onclick="go('points')"><b>Nhập điểm</b><span>Ghi nhận điểm thi đua</span></button><button class="quick" onclick="openIncident()"><b>Ghi vi phạm</b><span>Thêm sự việc mới</span></button><button class="quick" onclick="go('reports')"><b>Xuất báo cáo</b><span>Tải dữ liệu về máy</span></button></div><div style="margin-top:20px"><h3>Phân bố điểm học sinh</h3>${ranked.length?ranked.slice(0,5).map(s=>`<div class="bar-row"><span>${esc(s.name.split(' ').slice(-1)[0])}</span><div class="bar"><span style="width:${Math.max(3,Math.min(100,(Math.max(0,s.score)/Math.max(1,...ranked.map(x=>Math.max(0,x.score)))*100)))}%"></span></div><b>${s.score}</b></div>`).join(''):'<p class="muted">Thêm học sinh và nhập điểm để xem thống kê.</p>'}</div></section></div>`}
+function studentPage(){return `<div class="page-head"><div><h2>Danh sách học sinh</h2><div class="sub">Quản lý thông tin và tổ của từng học sinh.</div></div><button onclick="openStudent()">＋ Thêm học sinh</button></div><section class="panel"><div class="panel-head"><input id="studentSearch" placeholder="Tìm theo tên, mã học sinh..." oninput="filterStudents()" style="max-width:320px;width:100%"><span class="muted">Tổng: ${students.length} học sinh</span></div><div class="table-wrap"><table><thead><tr><th>STT</th><th>Mã học sinh</th><th>Họ và tên</th><th>Tổ</th><th>Tổng điểm</th><th>Thao tác</th></tr></thead><tbody id="studentRows">${studentRows(students)}</tbody></table></div></section>`}
+function studentRows(arr){return arr.map((s,i)=>`<tr><td>${i+1}</td><td>${esc(s.code)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.team)}</td><td>${pointsFor(s.id)}</td><td><button class="secondary small" onclick="openStudent(${s.id})">Sửa</button> <button class="danger small" onclick="deleteStudent(${s.id})">Xóa</button></td></tr>`).join('')||'<tr><td colspan="6" class="empty">Không tìm thấy học sinh.</td></tr>'}
+function filterStudents(){let q=$('#studentSearch').value.toLowerCase();$('#studentRows').innerHTML=studentRows(students.filter(s=>(s.name+' '+s.code+' '+s.team).toLowerCase().includes(q)))}
+function openStudent(id){let s=students.find(x=>x.id===id)||{name:'',code:'',team:'Tổ 1',note:''};showModal(id?'Sửa thông tin học sinh':'Thêm học sinh',`<form id="studentForm" class="form-grid"><label class="field">Họ và tên<input name="name" required value="${esc(s.name)}" placeholder="Nguyễn Văn A"></label><label class="field">Mã học sinh<input name="code" value="${esc(s.code||'')}" placeholder="HS009"></label><label class="field">Tổ<select name="team">${[1,2,3,4,5,6].map(n=>`<option ${s.team===`Tổ ${n}`?'selected':''}>Tổ ${n}</option>`).join('')}</select></label><label class="field">Ghi chú<input name="note" value="${esc(s.note||'')}" placeholder="Không bắt buộc"></label><div class="field full"><button type="submit">${id?'Lưu thay đổi':'Thêm học sinh'}</button></div></form>`);$('#studentForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));if(id)students=students.map(x=>x.id===id?{...x,...d}:x);else students.push({id:nextStudent++,...d});save();closeModal();render();toast('Đã lưu thông tin học sinh')}}
+function deleteStudent(id){if(!confirm('Xóa học sinh này khỏi danh sách? Các bản ghi điểm cũ vẫn được giữ.'))return;students=students.filter(s=>s.id!==id);save();render();toast('Đã xóa học sinh')}
+function pointsPage(){return `<div class="page-head"><div><h2>Nhập điểm thi đua</h2><div class="sub">Ghi điểm cộng hoặc trừ cho từng học sinh theo ngày và tuần.</div></div><button onclick="openPoint()">＋ Ghi điểm mới</button></div><div class="notice">💡 Nhập điểm dương để cộng, điểm âm để trừ. Ví dụ: 2 hoặc -3. Dữ liệu tự lưu trên trình duyệt.</div><section class="panel"><div class="panel-head"><h3>Lịch sử điểm</h3><div class="filters"><input type="date" id="pointDateFilter" value="" onchange="filterPoints()"><select id="pointStudentFilter" onchange="filterPoints()"><option value="">Tất cả học sinh</option>${students.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div></div><div class="table-wrap"><table><thead><tr><th>Ngày</th><th>Học sinh</th><th>Tổ</th><th>Nội dung</th><th>Điểm</th><th>Thao tác</th></tr></thead><tbody id="pointRows">${pointRows(entries)}</tbody></table></div></section>`}
+function pointRows(arr){return [...arr].sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id).map(e=>{let s=students.find(x=>x.id===e.studentId);return `<tr><td>${esc(e.date)}</td><td><b>${esc(studentName(e.studentId))}</b></td><td>${esc(s?.team||'—')}</td><td>${esc(e.reason)}</td><td><span class="pill ${e.points<0?'red':''}">${e.points>0?'+':''}${e.points}</span></td><td><button class="danger small" onclick="deletePoint(${e.id})">Xóa</button></td></tr>`}).join('')||'<tr><td colspan="6" class="empty">Chưa có dữ liệu điểm.</td></tr>'}
+function filterPoints(){let date=$('#pointDateFilter')?.value||'',sid=$('#pointStudentFilter')?.value||'';$('#pointRows').innerHTML=pointRows(entries.filter(e=>(!date||e.date===date)&&(!sid||String(e.studentId)===sid)))}
+function openPoint(){if(!students.length){toast('Hãy thêm học sinh trước');return}showModal('Ghi điểm thi đua',`<form id="pointForm" class="form-grid"><label class="field full">Học sinh<select name="studentId" required>${students.map(s=>`<option value="${s.id}">${esc(s.name)} — ${esc(s.team)}</option>`).join('')}</select></label><label class="field">Ngày<input type="date" name="date" value="${today()}" required></label><label class="field">Điểm (+/-)<input type="number" name="points" step="0.5" required placeholder="Ví dụ: 2 hoặc -1"></label><label class="field full">Nội dung ghi nhận<input name="reason" required placeholder="Ví dụ: Phát biểu xây dựng bài"></label><div class="field full"><button type="submit">Lưu điểm</button></div></form>`);$('#pointForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));entries.push({id:nextEntry++,studentId:Number(d.studentId),date:d.date,points:Number(d.points),reason:d.reason});save();closeModal();render();toast('Đã ghi điểm thành công')}}
+function deletePoint(id){if(!confirm('Xóa bản ghi điểm này?'))return;entries=entries.filter(e=>e.id!==id);save();render();toast('Đã xóa bản ghi điểm')}
+function incidentPage(){return `<div class="page-head"><div><h2>Vi phạm &amp; khen thưởng</h2><div class="sub">Ghi nhận sự việc, mức độ và hình thức xử lý hoặc khen thưởng.</div></div><button onclick="openIncident()">＋ Thêm ghi nhận</button></div><section class="panel"><div class="panel-head"><h3>Sổ theo dõi</h3><span class="muted">${incidents.length} ghi nhận</span></div><div class="table-wrap"><table><thead><tr><th>Ngày</th><th>Học sinh</th><th>Loại</th><th>Nội dung</th><th>Biện pháp / ghi chú</th><th></th></tr></thead><tbody>${[...incidents].sort((a,b)=>b.date.localeCompare(a.date)).map(i=>`<tr><td>${esc(i.date)}</td><td><b>${esc(studentName(i.studentId))}</b></td><td><span class="pill ${i.type==='Vi phạm'?'red':''}">${esc(i.type)}</span></td><td>${esc(i.reason)}</td><td>${esc(i.note||'—')}</td><td><button class="danger small" onclick="deleteIncident(${i.id})">Xóa</button></td></tr>`).join('')||'<tr><td colspan="6" class="empty">Chưa có ghi nhận nào.</td></tr>'}</tbody></table></div></section>`}
+function openIncident(){if(!students.length){toast('Hãy thêm học sinh trước');return}showModal('Thêm vi phạm / khen thưởng',`<form id="incidentForm" class="form-grid"><label class="field full">Học sinh<select name="studentId">${students.map(s=>`<option value="${s.id}">${esc(s.name)} — ${esc(s.team)}</option>`).join('')}</select></label><label class="field">Ngày<input type="date" name="date" value="${today()}" required></label><label class="field">Loại<select name="type"><option>Vi phạm</option><option>Khen thưởng</option><option>Nhắc nhở</option></select></label><label class="field full">Nội dung<input name="reason" required placeholder="Mô tả sự việc"></label><label class="field full">Biện pháp / ghi chú<textarea name="note" rows="2" placeholder="Hướng xử lý hoặc thông tin bổ sung"></textarea></label><div class="field full"><button type="submit">Lưu ghi nhận</button></div></form>`);$('#incidentForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));incidents.push({id:nextIncident++,studentId:Number(d.studentId),date:d.date,type:d.type,reason:d.reason,note:d.note});save();closeModal();render();toast('Đã lưu ghi nhận')}}
+function deleteIncident(id){if(!confirm('Xóa ghi nhận này?'))return;incidents=incidents.filter(i=>i.id!==id);save();render()}
+function rankingPage(){let ranked=sortedStudents();return `<div class="page-head"><div><h2>Bảng xếp hạng thi đua</h2><div class="sub">Xếp hạng tự động theo tổng điểm đã ghi nhận.</div></div><button class="secondary" onclick="exportCSV('ranking')">⇩ Tải bảng xếp hạng CSV</button></div><section class="panel"><div class="table-wrap"><table><thead><tr><th>Thứ hạng</th><th>Mã HS</th><th>Họ và tên</th><th>Tổ</th><th>Số lần ghi điểm</th><th>Tổng điểm</th></tr></thead><tbody>${ranked.map((s,i)=>`<tr><td>${i===0?'🥇 Hạng 1':i===1?'🥈 Hạng 2':i===2?'🥉 Hạng 3':i+1}</td><td>${esc(s.code)}</td><td><b>${esc(s.name)}</b></td><td>${esc(s.team)}</td><td>${entries.filter(e=>e.studentId===s.id).length}</td><td><span class="pill ${s.score<0?'red':''}">${s.score>0?'+':''}${s.score}</span></td></tr>`).join('')||'<tr><td colspan="6" class="empty">Chưa có dữ liệu.</td></tr>'}</tbody></table></div></section>`}
+function reportPage(){return `<div class="page-head"><div><h2>Báo cáo &amp; sao lưu</h2><div class="sub">Xuất dữ liệu để lưu trữ hoặc xử lý trong Excel.</div></div><button class="secondary" onclick="logout()">Đăng xuất</button></div><div class="notice">☁️ Khi đã cấu hình Firebase, dữ liệu có thể đồng bộ giữa nhiều thiết bị. Chức năng xuất JSON/CSV hiện có vẫn dùng để sao lưu độc lập. Bản tải xuống này chưa tự kết nối cơ sở dữ liệu cho đến khi bạn điền cấu hình Firebase.</div><div class="cards">${stat('Học sinh',students.length,'♙','Danh sách')}${stat('Bản ghi điểm',entries.length,'✎','Lịch sử điểm')}${stat('Ghi nhận',incidents.length,'⚑','Vi phạm / khen thưởng')}${stat('Điểm toàn lớp',entries.reduce((s,e)=>s+Number(e.points),0),'★','Tổng cộng')}</div><section class="panel"><div class="panel-head"><h3>Xuất dữ liệu</h3></div><p class="muted">Tải các bảng dữ liệu của lớp đang chọn dưới dạng CSV; sao lưu JSON bao gồm toàn bộ lớp và dữ liệu từng lớp.</p><div class="quick-grid"><button class="quick" onclick="exportCSV('students')"><b>⇩ Danh sách học sinh</b><span>Thông tin học sinh và tổng điểm</span></button><button class="quick" onclick="exportCSV('entries')"><b>⇩ Lịch sử điểm</b><span>Toàn bộ lần cộng / trừ điểm</span></button><button class="quick" onclick="exportCSV('incidents')"><b>⇩ Vi phạm &amp; khen thưởng</b><span>Danh sách sự việc đã ghi nhận</span></button><button class="quick" onclick="exportJSON()"><b>⇩ Sao lưu toàn bộ (JSON)</b><span>Khuyến nghị lưu định kỳ</span></button><button class="quick" onclick="document.getElementById('importFile').click()"><b>⇧ Khôi phục sao lưu</b><span>Nhập tệp JSON đã xuất trước đó</span></button><input type="file" id="importFile" accept=".json,application/json" style="display:none" onchange="importJSON(event)"></div></section><section class="panel"><div class="panel-head"><h3>Thiết lập dữ liệu</h3></div><p class="muted">Xóa toàn bộ dữ liệu sẽ không thể khôi phục nếu bạn chưa sao lưu.</p><button class="danger" onclick="resetAll()">Xóa toàn bộ dữ liệu</button></section>`}
+function csvDownload(name,rows){let csv='\\ufeff'+rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\\r\\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download=name+'_'+today()+'.csv';a.click();URL.revokeObjectURL(a.href)}
+function exportCSV(type){if(type==='students')csvDownload('danh_sach_hoc_sinh',[['Mã HS','Họ tên','Tổ','Tổng điểm','Ghi chú'],...students.map(s=>[s.code,s.name,s.team,pointsFor(s.id),s.note])]);if(type==='entries')csvDownload('lich_su_diem',[['Ngày','Mã HS','Họ tên','Tổ','Nội dung','Điểm'],...entries.map(e=>{let s=students.find(s=>s.id===e.studentId)||{};return[e.date,s.code,studentName(e.studentId),s.team,e.reason,e.points]})]);if(type==='incidents')csvDownload('vi_pham_khen_thuong',[['Ngày','Họ tên','Loại','Nội dung','Ghi chú'],...incidents.map(i=>[i.date,studentName(i.studentId),i.type,i.reason,i.note])]);if(type==='ranking')csvDownload('xep_hang',[['Hạng','Mã HS','Họ tên','Tổ','Tổng điểm'],...sortedStudents().map((s,i)=>[i+1,s.code,s.name,s.team,s.score])]);toast('Đã tạo tệp CSV')}
+function exportJSON(){persistCurrentClass();let data={version:2,exportedAt:new Date().toISOString(),classes,currentClassId,classData,students,entries,incidents};let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='sao_luu_so_thi_dua_'+today()+'.json';a.click();URL.revokeObjectURL(a.href);toast('Đã tạo tệp sao lưu')}
+function importJSON(ev){let f=ev.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!confirm('Khôi phục sẽ thay thế dữ liệu hiện tại. Bạn đã sẵn sàng?'))return;
+if(Array.isArray(d.classes)&&d.classData){classes=d.classes;classData=d.classData;currentClassId=d.currentClassId||classes[0]?.id;const active=classData[currentClassId]||{students:[],entries:[],incidents:[]};students=active.students||[];entries=active.entries||[];incidents=active.incidents||[]}
+else {if(!Array.isArray(d.students)||!Array.isArray(d.entries)||!Array.isArray(d.incidents))throw Error();classes=[{id:'class_1',name:'Lớp khôi phục',schoolYear:'2026–2027'}];currentClassId='class_1';students=d.students;entries=d.entries;incidents=d.incidents;classData={class_1:{students,entries,incidents}}}
+nextStudent=Math.max(0,...students.map(x=>x.id))+1;nextEntry=Math.max(0,...entries.map(x=>x.id))+1;nextIncident=Math.max(0,...incidents.map(x=>x.id))+1;save();renderClassSelector();render();toast('Khôi phục dữ liệu thành công')}catch{alert('Tệp sao lưu không hợp lệ.')}ev.target.value=''};r.readAsText(f)}
+function resetAll(){if(!confirm('Bạn chắc chắn muốn xóa toàn bộ học sinh, điểm và ghi nhận?'))return;if(!confirm('Xác nhận lần cuối: dữ liệu sẽ bị xóa khỏi trình duyệt.'))return;students=[];entries=[];incidents=[];save();render();toast('Đã xóa dữ liệu')}
+function showModal(title,body){$('#modalTitle').textContent=title;$('#modalBody').innerHTML=body;$('#modalBackdrop').classList.add('show')}
+function closeModal(){$('#modalBackdrop').classList.remove('show')}
+$('#modalBackdrop').addEventListener('click',e=>{if(e.target.id==='modalBackdrop')closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+// ===== ĐĂNG NHẬP / PHÂN QUYỀN (bản mẫu) =====
+// Để bật xác thực và đồng bộ thật: cấu hình Firebase trong firebase-config.js
+// Không lưu mật khẩu trong localStorage. Chế độ ngoại tuyến chỉ là bản demo.
+let currentUser = null;
+let registering = false;
+function toggleRegister(){
+  registering = !registering;
+  $('#authTitle').textContent = registering ? 'Tạo tài khoản demo' : 'Đăng nhập';
+  $('#registerBtn').textContent = registering ? 'Quay lại đăng nhập' : 'Tạo tài khoản';
+  $('#loginBtn').textContent = registering ? 'Tạo tài khoản' : 'Đăng nhập';
+  $('#roleField').style.display = registering ? 'block' : 'none';
+  $('#authHelp').textContent = registering
+    ? 'Tài khoản tạo ở chế độ demo chỉ lưu trên máy này. Để đăng ký tài khoản thật, cần bật Firebase Authentication và đặt quy tắc phân quyền.'
+    : 'Đăng nhập bằng tài khoản được quản trị viên cấp. Bản mẫu hiện chạy chế độ cục bộ cho đến khi bạn cấu hình Firebase.';
+}
+function authLogin(){
+  const email = $('#authEmail').value.trim();
+  const password = $('#authPassword').value;
+  if(!email || !password){toast('Vui lòng nhập email và mật khẩu');return}
+  if(registering){
+    const role = $('#authRole').value;
+    const demoUsers = load('demoUsers', []);
+    if(demoUsers.some(u=>u.email.toLowerCase()===email.toLowerCase())){toast('Email demo đã tồn tại');return}
+    demoUsers.push({email,role});localStorage.setItem('classbook_demoUsers',JSON.stringify(demoUsers));
+    toast('Đã tạo tài khoản demo. Hãy đăng nhập.');toggleRegister();return;
+  }
+  const users = load('demoUsers', []);
+  const found = users.find(u=>u.email.toLowerCase()===email.toLowerCase());
+  // Demo only: no password is stored or validated. Real auth requires Firebase.
+  currentUser = {email, role: found?.role || 'teacher', demo:true};
+  enterApp();
+}
+function continueLocal(){
+  currentUser = {email:'demo.local',role:'teacher',demo:true};
+  enterApp();
+}
+function enterApp(){
+  $('#authScreen').style.display='none';
+  const role = currentUser?.role || 'teacher';
+  $('#userLabel').textContent = role==='teacher' ? 'GV Lê Nguyễn Thảo Ngân' : 'Học sinh · '+(currentUser?.email||'');
+  $('#syncStatus').textContent = 'HIS - GEO EDU · Chế độ demo ngoại tuyến — chưa đồng bộ đám mây.';
+  // Học sinh chỉ được xem tổng quan, bảng xếp hạng và báo cáo; thao tác chỉnh sửa bị ẩn.
+  document.querySelectorAll('#nav button').forEach(b=>{
+    const allowed = role==='teacher' || ['dashboard','ranking','reports'].includes(b.dataset.page);
+    b.style.display = allowed ? '' : 'none';
+  });
+  if(role==='student'){
+    const oldOpenStudent = window.openStudent;
+    window.openStudent = ()=>toast('Tài khoản học sinh không có quyền sửa danh sách.');
+    window.openPoint = ()=>toast('Tài khoản học sinh không có quyền nhập điểm.');
+    window.openIncident = ()=>toast('Tài khoản học sinh không có quyền ghi nhận vi phạm.');
+    window.deleteStudent = ()=>toast('Tài khoản học sinh không có quyền xóa dữ liệu.');
+    window.deletePoint = ()=>toast('Tài khoản học sinh không có quyền xóa dữ liệu.');
+    window.deleteIncident = ()=>toast('Tài khoản học sinh không có quyền xóa dữ liệu.');
+    go('dashboard');
+  } else {go('dashboard')}
+}
+function logout(){
+  currentUser=null;
+  $('#authScreen').style.display='flex';
+  $('#authEmail').value='';$('#authPassword').value='';
+  toast('Đã đăng xuất khỏi giao diện demo');
+}
+
+render();
+</script>
+</body>
+</html>
